@@ -1,0 +1,50 @@
+backward_config:
+  enable_backward_config: 1
+  freeze_fc: 0
+  manual_weight_idx: null
+  n_bias_update: 6
+  n_weight_update: 6
+  pw1_weight_only: 0
+  quantize_gradient: 0
+  train_scale: 0
+  weight_select_criteria: magnitude+
+  weight_update_ratio: null
+data_provider:
+  base_batch_size: 64
+  color_aug: 0.4
+  dataset: image_folder
+  image_size: 128
+  n_worker: 8
+  num_classes: 2
+  resize_scale: 0.08
+  root: /home/gridsan/agupta2/6.5940/person_split
+evaluate: false
+manual_seed: 0
+net_config:
+  cls_head: linear
+  dropout: 0.0
+  mcu_head_type: fp
+  net_name: mcunet-5fps
+  pretrained: false
+ray_tune: 0
+resume: 0
+run_config:
+  base_lr: 0.025
+  bias_only: 0
+  bs256_lr: 0.1
+  eval_per_epochs: 10
+  fc_lr10: 0
+  fc_only: 0
+  grid_ckpt_path: null
+  grid_output: null
+  lr_schedule_name: cosine
+  n_block_update: -1
+  n_epochs: 50
+  no_wd_keys:
+  - norm
+  - bias
+  optimizer_name: sgd
+  warmup_epochs: 5
+  warmup_lr: 0
+  weight_decay: 0
+run_dir: algorithm/runs/person/mcunet-5fps/6b+6w/sgd

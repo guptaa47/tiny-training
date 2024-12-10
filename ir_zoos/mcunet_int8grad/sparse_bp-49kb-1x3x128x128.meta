@@ -1,0 +1,62 @@
+{
+  "output_info": [
+    "fwd@output",
+    "v15_bias",
+    "v15_weight",
+    "v14_conv_2_bias",
+    "v14_conv_1_bias",
+    "v14_conv_0_bias",
+    "v13_conv_2_bias",
+    "v13_conv_1_bias",
+    "v13_conv_0_bias",
+    "v12_conv_2_bias",
+    "v12_conv_1_bias",
+    "v12_conv_0_bias",
+    "v11_conv_2_bias",
+    "v11_conv_1_bias",
+    "v11_conv_0_bias",
+    "v11_conv_0_weight",
+    "v10_conv_2_bias",
+    "v10_conv_1_bias",
+    "v10_conv_0_bias",
+    "v10_conv_0_weight",
+    "v9_conv_2_bias",
+    "v9_conv_1_bias",
+    "v9_conv_0_bias",
+    "v9_conv_0_weight",
+    "v8_conv_2_bias",
+    "v8_conv_1_bias"
+  ],
+  "sparse_update_info": [
+    {
+      "op_idx(revser order)": 13,
+      "sparse ratio": 0.5,
+      "gradient shape": [
+        240,
+        48,
+        1,
+        1
+      ]
+    },
+    {
+      "op_idx(revser order)": 16,
+      "sparse ratio": 0.5,
+      "gradient shape": [
+        192,
+        48,
+        1,
+        1
+      ]
+    },
+    {
+      "op_idx(revser order)": 19,
+      "sparse ratio": 0.25,
+      "gradient shape": [
+        144,
+        48,
+        1,
+        1
+      ]
+    }
+  ]
+}

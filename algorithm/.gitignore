@@ -6,7 +6,7 @@ exp-vww/
 exp-vww-bak/
 lightning_logs/
 run.sh
-runs/
+# runs/
 wandb/
 test.py
 
