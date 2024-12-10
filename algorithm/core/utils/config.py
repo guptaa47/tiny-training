@@ -65,6 +65,9 @@ def update_config_from_args(args: Union[dict, argparse.Namespace]):
         ret = _iterative_update(configs, k, v)
         if not ret:
             raise ValueError(f'ERROR: Updating args failed: cannot find key: {k}')
+    
+    print("Successfully updated config!")
+    print(configs)
 
 
 def parse_unknown_args(unknown):
@@ -110,7 +113,9 @@ def configs2dict(cfg):
 
 
 if __name__ == '__main__':
-    load_config_from_file('/home/jilin/workspace/clip_distill/configs/flowers102/resnet50.yaml')
-    print(configs.run_config.n_epochs)
-    update_config_from_args({'n_epochs': 100, 'dummy': 100})
-    print(configs.run_config.n_epochs)
+    load_config_from_file('/home/gridsan/agupta2/6.5940/tiny-training/algorithm/configs/default.yaml')
+    print(configs)
+    load_config_from_file('/home/gridsan/agupta2/6.5940/tiny-training/algorithm/configs/transfer.yaml')
+    print(configs)
+    # update_config_from_args({'n_epochs': 100, 'dummy': 100})
+    # print(configs.run_config.n_epochs)

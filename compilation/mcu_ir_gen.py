@@ -1,6 +1,7 @@
 import os
 import os.path as osp
 import json
+import torch
 from compilation.convert import (
     build_quantized_mcunet,
     build_quantized_mbv2,
@@ -13,7 +14,7 @@ from compilation.convert import (
 model_name = "mcunet"
 rs = 128
 num_classes = 10
-int8_bp = False
+int8_bp = True
 
 # convert pytorch model to forward graph
 if model_name == "mbv2":
@@ -37,8 +38,11 @@ if model_name == "mbv2":
         }
     }
 elif model_name == "mcunet":
-    path = "ir_zoos/mcunet_quantize"
+    path = "ir_zoos/mcunet"
     model, _ = build_quantized_mcunet(num_classes=num_classes)
+    # checkpoint = torch.load("../algorithm/runs/mini-person/mcunet-5fps/sparse_100kb/sgd_qas_nomom/checkpoint/ckpt.best.pth")
+    # checkpoint = torch.load("/home/gridsan/agupta2/6.5940/tiny-training//home/gridsan/agupta2/6.5940/tiny-training/algorithm/runs/celeba/mcunet-5fps/sparse_50kb/sgd_qas_nomom/checkpoint/ckpt.best.pth")
+    # model.load_state_dict(checkpoint["state_dict"] if 'state_dict' in checkpoint else checkpoint)
     sparse_update_config = {
         "49kb": {
             "enable_backward_config": 1, "n_bias_update": 20, "n_weight_update": 0, "weight_update_ratio": [0, 0.25, 0.5, 0.5, 0, 0], "manual_weight_idx": [23, 24, 27, 30, 33, 39], "weight_select_criteria": "magnitude+", "pw1_weight_only": 0,

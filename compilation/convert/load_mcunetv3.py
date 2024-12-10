@@ -21,27 +21,41 @@ from .mcunetv3_wrapper import (
 )
 
 
-def build_quantized_model(net_name="mbv2-w0.35", num_classes=10):
-    load_config_from_file("configs/transfer.yaml")
+def build_quantized_model(net_name="mbv2-w0.35", num_classes=2):
+    load_config_from_file("/home/gridsan/agupta2/6.5940/tiny-training/algorithm/configs/transfer.yaml")
     configs["net_config"]["net_name"] = net_name # "mbv2-w0.35"
-    configs["net_config"]["mcu_head_type"] = "quantized"
+    # configs["net_config"]["mcu_head_type"] = "quantized"
 
     subnet = build_mcu_model()
+    # print("There are ", len(subnet), " layers in the subnet")
+    # print("All layers:", [type(layer) for layer in subnet])
     subnet = nn.Sequential(*subnet[:5])
     resolution = 128
     last = subnet[-1]
-    subnet[-1] = QuantizedConv2dDiff(
-        last.in_channels,
-        num_classes,
-        kernel_size=last.kernel_size,
-        stride=last.stride,
-        zero_x=last.zero_x,
-        zero_y=last.zero_y,
-        effective_scale=last.effective_scale[:num_classes],
-    )
-    subnet[-1].y_scale = last.y_scale
-    subnet[-1].x_scale = last.x_scale
-    subnet[-1].weight.data = last.weight.data[:num_classes, :, :, :]
+    if isinstance(last, QuantizedConv2dDiff):
+        subnet[-1] = QuantizedConv2dDiff(
+            last.in_channels,
+            num_classes,
+            kernel_size=last.kernel_size,
+            stride=last.stride,
+            zero_x=last.zero_x,
+            zero_y=last.zero_y,
+            effective_scale=last.effective_scale[:num_classes],
+        )
+        subnet[-1].y_scale = last.y_scale
+        subnet[-1].x_scale = last.x_scale
+        subnet[-1].weight.data = last.weight.data[:num_classes, :, :, :]
+    elif isinstance(last, ScaledLinear):
+        subnet[-1] = ScaledLinear(
+            last.in_features,
+            num_classes,
+            scale_x=last.scale_x,
+            zero_x=last.zero_x,
+            norm_feat=False
+        )
+        subnet[-1].weight.data = last.weight.data[:num_classes, :]
+    else:
+        raise NotImplementedError
     return subnet, resolution
 
 

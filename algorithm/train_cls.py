@@ -35,7 +35,7 @@ def build_config():  # separate this config requirement so that we can call main
 def main():
     dist.init()
     torch.backends.cudnn.benchmark = True
-    torch.cuda.set_device(dist.local_rank())
+    # torch.cuda.set_device(dist.local_rank())
 
     assert configs.run_dir is not None
     os.makedirs(configs.run_dir, exist_ok=True)
@@ -67,7 +67,8 @@ def main():
         )
 
     # create model
-    model = build_mcu_model().cuda()
+    # model = build_mcu_model().cuda()
+    model = build_mcu_model()
 
     if dist.size() > 1:
         model = torch.nn.parallel.DistributedDataParallel(

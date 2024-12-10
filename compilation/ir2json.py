@@ -107,7 +107,7 @@ def translate_mod(
 if __name__ == "__main__":
     import os, sys
 
-    mod_path = "tmp/lenet/bias_only-1x1x32x32.ir"
+    # mod_path = "tmp/lenet/bias_only-1x1x32x32.ir"
     # mod_path = "tmp/lenet/weights.param"
 
     if len(sys.argv) >= 2:
@@ -115,7 +115,8 @@ if __name__ == "__main__":
 
     assert osp.exists(mod_path), f"{mod_path} does not exists."
     param_path = osp.join(osp.dirname(mod_path), "weights.param")
-    translate_ir(path=mod_path , out_folder=".model/testproj")
+    out_folder = ".model/" + mod_path.split("/")[-2]
+    translate_ir(path=mod_path , out_folder=out_folder)
 
     # mod, params = mod_load("./", mod_name=mod_path)
     # meta = osp.join(mod_path.replace(".ir", ".meta"))

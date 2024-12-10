@@ -47,6 +47,7 @@ class BaseTrainer(object):
 
             if is_best:
                 torch.save(checkpoint, os.path.join(self.checkpoint_path, 'ckpt.best.pth'))
+                torch.save(self.model, os.path.join(configs.run_dir, 'model.pkl'))
 
     def resume(self):
         model_fname = os.path.join(self.checkpoint_path, 'ckpt.pth')

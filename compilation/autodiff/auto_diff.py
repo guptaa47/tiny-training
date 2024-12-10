@@ -1,7 +1,7 @@
 import enum
 import time
 from pprint import pprint
-from dask import visualize
+# from dask import visualize
 
 import numpy as np
 
